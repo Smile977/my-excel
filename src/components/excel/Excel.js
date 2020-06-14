@@ -3,25 +3,17 @@ import {$} from '@core/dom'
 export class Excel {
   // $ - point at dom node
   constructor(selector, options) {
-    this.$el = document.querySelector(selector)
+    this.$el = $(selector)
     this.components = options.components || []
   }
 
   getRoot() {
     const $root = $.create('div', 'excel')
-    // const $root = document.createElement('div') // создание главного элемента
-    // $root.classList.add('excel') // добавляем класс для корневого элемента
-    // проходимся по всем классам в массиве и создаем их экземпляры
     this.components.forEach(Component => {
       const $el = $.create('div', Component.className)
       const component = new Component($el)
-      $el.innerHTML = component.toHTML()
+      $el.html(component.toHTML())
       $root.append($el)
-      // const $el = document.createElement('div')
-      // $el.classList.add(Component.className)
-      // const component = new Component($el)
-      // $el.innerHTML = component.toHTML() // наполнение корневого элемента
-      // $root.append($el)
     })
     return $root
   }
