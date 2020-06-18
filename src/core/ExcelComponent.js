@@ -2,8 +2,16 @@ import {DomListener} from '@core/DomListener'
 
 // abstract class
 export class ExcelComponent extends DomListener {
-  // return component of pattern
+  constructor($root, options = {}) {
+    super($root, options.listeners)
+  }
+
+  // Возвращает шаблон компонента
   toHTML() {
     return ''
+  }
+
+  init() {
+    this.initDOMListeners()
   }
 }
