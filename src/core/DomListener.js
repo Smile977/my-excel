@@ -22,15 +22,17 @@ export class DomListener {
             `Method ${method} is not implemented in ${name} Component`
         )
       }
-      console.log(method)
+      this[method] = this[method].bind(this)
       // it's the same thing like addEventListener
-      this.$root.on(listener, this[method].bind(this))
+      this.$root.on(listener, this[method])
     })
   }
 
-  // remove listeners
   removeDOMListeners() {
-    // realize!
+    this.listeners.forEach(listener => {
+      const method = getMethodName(listener)
+      this.$root.off(listener, this[method])
+    })
   }
 }
 
