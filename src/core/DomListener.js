@@ -1,3 +1,5 @@
+import {capitalize} from '@core/utils'
+
 export class DomListener {
   // $root - корневой элемент на который будем вешать различные слушатели
   constructor($root, listeners = []) {
@@ -8,11 +10,31 @@ export class DomListener {
     this.listeners = listeners
   }
 
-  // add listeners
+  // add listeners after that we painted html
   initDOMListeners() {
-    console.log(this.listeners)
+    this.listeners.forEach(listener => {
+      console.log(listener, this.$root)
+
+      const method = getMethodName(listener)
+      if (!this[method]) {
+        const name = this.name || ''
+        throw new Error(
+            `Method ${method} is not implemented in ${name} Component`
+        )
+      }
+      console.log(method)
+      // it's the same thing like addEventListener
+      this.$root.on(listener, this[method].bind(this))
+    })
   }
 
   // remove listeners
-  removeDOMListeners() {}
+  removeDOMListeners() {
+    // realize!
+  }
+}
+
+// change 'input' => 'onInput'
+function getMethodName(eventName) {
+  return 'on' + capitalize(eventName)
 }

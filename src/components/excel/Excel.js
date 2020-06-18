@@ -20,10 +20,12 @@ export class Excel {
     return $root
   }
 
-  // складываем что то в шаблон
+  // something add in html template
   render() {
+    // paint html
     this.$el.append(this.getRoot())
 
+    // call method after paint html and add listeners for components
     this.components.forEach(component => component.init())
   }
 }
