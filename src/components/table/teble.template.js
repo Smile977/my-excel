@@ -12,20 +12,22 @@ function toCell() {
 function toColumn(col) {
   return `
     <div class="column">
-      ${col}
-      <div class="col-resize"></div>
+      ${col}      
+      <div class="col-resize" data-resize="col"></div>
     </div>
   `
 }
 
 // создание структуры строки
 function createRow(index, content) {
-  const resizer = index !== null ? '<div class="row-resize"></div>' : ''
+  const resize = index !== null
+    ? '<div class="row-resize" data-resize="row"></div>'
+    : ''
   return `
     <div class="row">
       <div class="row-info">
         ${index ? index : ''}
-        ${resizer}        
+        ${resize}        
       </div>
       <div class="row-data">${content}</div>
     </div> 
