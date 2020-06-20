@@ -13,8 +13,6 @@ export class DomListener {
   // add listeners after that we painted html
   initDOMListeners() {
     this.listeners.forEach(listener => {
-      console.log(listener, this.$root)
-
       const method = getMethodName(listener)
       if (!this[method]) {
         const name = this.name || ''
