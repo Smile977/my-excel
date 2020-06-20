@@ -4,9 +4,9 @@ const CODES = {
 }
 
 // создание ячейки
-// function createCell() {
-//   return `<div class="cell contenteditable">B1</div>`
-// }
+function toCell() {
+  return `<div class="cell" contenteditable></div>`
+}
 
 // создание колонки
 function toColumn(col) {
@@ -14,10 +14,10 @@ function toColumn(col) {
 }
 
 // создание структуры строки
-function createRow(content) {
+function createRow(index, content) {
   return `
     <div class="row">
-      <div class="row-info"></div>
+      <div class="row-info">${index ? index : ''}</div>
       <div class="row-data">${content}</div>
     </div> 
   `
@@ -27,7 +27,7 @@ function toChar(_, index) {
   return String.fromCharCode(CODES.A + index)
 }
 
-export function createTable(rowsCunt = 15) {
+export function createTable(rowsCount = 15) {
   const colsCount = CODES.Z - CODES.A + 1
   const rows = []
 
@@ -48,11 +48,17 @@ export function createTable(rowsCunt = 15) {
       .map(toColumn) // создаем колонки
       .join('') // соединяем в строчку
 
-  // шапка excel A-Z
-  rows.push(createRow(cols))
+  // шапка excel A-Z (работа с первой строчкой)
+  rows.push(createRow(null, cols))
 
-  for (let i = 0; i < rowsCunt; i++) {
-    rows.push(createRow())
+  // работа с основной таблицей и ячейками
+  for (let i = 0; i < rowsCount; i++) {
+    const cells = new Array(rowsCount)
+        .fill('')
+        .map(toCell)
+        .join('')
+
+    rows.push(createRow(i + 1, cells))
   }
 
   return rows.join('')
