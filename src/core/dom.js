@@ -38,6 +38,15 @@ class Dom {
     }
     return this
   }
+
+  closest(selector) {
+    return $(this.$el.closest(selector))
+  }
+
+  getCoords() {
+    // получение каоординат - getBoundingClientRect()
+    return this.$el.getBoundingClientRect()
+  }
 }
 
 export function $(selector) {
