@@ -38,6 +38,36 @@ class Dom {
     }
     return this
   }
+
+  get data() {
+    return this.$el.dataset
+  }
+
+  closest(selector) {
+    return $(this.$el.closest(selector))
+  }
+
+  getCoords() {
+    // получение каоординат - getBoundingClientRect()
+    return this.$el.getBoundingClientRect()
+  }
+
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
+
+  /*
+  * {
+  *   height: 30px;
+  *   width: 42px;
+  *   background: red;
+  * }
+  * */
+  css(styles = {}) {
+    Object
+        .keys(styles)
+        .forEach(key => this.$el.style[key] = styles[key])
+  }
 }
 
 export function $(selector) {
