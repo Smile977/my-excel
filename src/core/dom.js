@@ -51,6 +51,10 @@ class Dom {
     // получение каоординат - getBoundingClientRect()
     return this.$el.getBoundingClientRect()
   }
+
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
 }
 
 export function $(selector) {
