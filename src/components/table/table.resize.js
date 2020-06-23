@@ -6,6 +6,7 @@ export function tableResizeHandler($root, event) {
   const coords = $parent.getCoords()
   const type = event.target.dataset.resize
   let value
+  // $resizer.css({right: 0})
 
   document.onmousemove = e => {
     if (type === 'col') {
@@ -32,5 +33,10 @@ export function tableResizeHandler($root, event) {
       $root.findAll(`[data-col="${$parent.data.col}"]`)
           .forEach(el => el.style.height = value + 'px')
     }
+
+    $resizer.css({
+      bottom: 0,
+      right: 0
+    })
   }
 }
