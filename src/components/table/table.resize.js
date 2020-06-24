@@ -1,6 +1,6 @@
 import {$} from '@core/dom'
 
-export function tableResizeHandler($root, event) {
+export function resizeHandler($root, event) {
   const $resizer = $(event.target)
   const $parent = $resizer.closest('[data-type="resizable"]')
   const coords = $parent.getCoords()
