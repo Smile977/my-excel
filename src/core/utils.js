@@ -6,3 +6,14 @@ export function capitalize(string) {
 
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
+// input: 0:3
+// output: [1, 2, 3]
+export function range(start, end) {
+  if (start > end) {
+    [end, start] = [start, end]
+  }
+  return new Array(end - start + 1)
+      .fill('')
+      .map((_, index) => start + index)
+}

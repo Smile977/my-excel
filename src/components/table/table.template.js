@@ -4,13 +4,28 @@ const CODES = {
 }
 
 // создание ячейки
-function toCell(_, col) {
-  return `
-    <div 
-      data-col="${col}"
-      class="cell" 
-      contenteditable
-    ></div>`
+// function toCell(_, col) {
+//   return `
+//     <div
+//       data-col="${col}"
+//       class="cell"
+//       contenteditable
+//     ></div>`
+// }
+
+// создание ячейки
+function toCell(row) {
+  return function(_, col) {
+    return `
+      <div
+        data-id="${row}:${col}" 
+        data-type="cell"
+        data-col="${col}"
+        class="cell" 
+        contenteditable
+      ></div>
+    `
+  }
 }
 
 // создание колонки
@@ -68,13 +83,14 @@ export function createTable(rowsCount = 20) {
   rows.push(createRow(null, cols))
 
   // работа с основной таблицей и ячейками
-  for (let i = 0; i < rowsCount; i++) {
+  for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(rowsCount)
         .fill('')
-        .map(toCell)
+        // .map((_, col) => toCell(row, col))
+        .map(toCell(row))
         .join('')
 
-    rows.push(createRow(i + 1, cells))
+    rows.push(createRow(row + 1, cells))
   }
 
   return rows.join('')
