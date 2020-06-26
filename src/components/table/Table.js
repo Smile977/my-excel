@@ -16,7 +16,7 @@ export class Table extends ExcelComponent {
   constructor($root, options) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'keydown'],
+      listeners: ['mousedown', 'keydown', 'input'],
       ...options
     })
   }
@@ -33,13 +33,22 @@ export class Table extends ExcelComponent {
     super.init()
 
     const $cell = this.$root.find('[data-id="0:0"]')
-    this.selection.select($cell)
+    this.selectCell($cell)
 
     // Подписка событий
     this.emitter.subscribe('formula:input', text => {
       this.selection.current.text(text)
-      console.log('Table from Formula: ', text)
     })
+
+    // Если нажали Enter в формуле тогда фокус на ячейку
+    this.emitter.subscribe('formula:done', element => {
+      this.selection.current.focus()
+    })
+  }
+
+  selectCell($cell) {
+    this.selection.select($cell)
+    this.$emit('table:select', $cell)
   }
 
   onMousedown(event) {
@@ -76,7 +85,14 @@ export class Table extends ExcelComponent {
       const id = this.selection.current.id(true)
 
       const $next = this.$root.find(nextSelection(key, id))
-      this.selection.select($next)
+
+      // Добавляем событие для перехода на ячейку и двойное связывание
+      // между ячейкой и инпктов в форме
+      this.selectCell($next)
     }
+  }
+
+  onInput(event) {
+    this.$emit('table:input', $(event.target))
   }
 }
