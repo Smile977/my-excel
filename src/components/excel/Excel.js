@@ -6,6 +6,9 @@ export class Excel {
   constructor(selector, options) {
     this.$el = $(selector)
     this.components = options.components || []
+
+    // Создание класса для связи можеду компонентами
+    // Можно подписываться на события и отписываться
     this.emitter = new Emitter()
   }
 
@@ -21,9 +24,9 @@ export class Excel {
       const component = new Component($el, componentOptions)
 
       // DEBUG
-      if (component.name) {
-        window['c' + component.name] = component
-      }
+      // if (component.name) {
+      //   window['c' + component.name] = component
+      // }
 
       $el.html(component.toHTML())
       $root.append($el)
@@ -40,5 +43,9 @@ export class Excel {
 
     // call method after paint html and add listeners for components
     this.components.forEach(component => component.init())
+  }
+
+  destroy() {
+    this.components.forEach(component => component.destroy())
   }
 }
